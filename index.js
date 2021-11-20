@@ -1,85 +1,92 @@
-//      fetch('https://6194c46874c1bd00176c6922.mockapi.io/api/books')
-//     .then(response => response.json())
-//     .then(data => console.log(data));
 
-//     //endpoint thay bằng tên collection được tạo
+var app = new function() {
+  this.el = document.getElementById('tasks');
 
-    const form = document.getElementById("form");
-    const input = document.getElementById("input");
-    const button = document.getElementById("button");
-    const todo = document.getElementById("todo");
-    let todoList = [];
-    
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      addTodo();
-    });
-    
-    function addTodo() {
-      // get input
-      const newTodo = input.value;
-      // return if nothing was entered
-      if (!newTodo) return;
-      // add the new task to todo list
-      todoList.push({
-        text: newTodo,
-        completed: false,
-      });
-      // add the todo list to localstorage
-      localStorage.setItem("todos", JSON.stringify(todoList));
-      // render todo list
-      render();
+  this.tasks = [];
+
+  
+  
+  this.FetchAll = function() {
+    var data = '';
+
+    if (this.tasks.length > 0) {
+      for (i = 0; i < this.tasks.length; i++) {
+        data += '<tr>';
+        data += '<td>'+(i+1)+". " + this.tasks[i] + '</td>';
+        data += '<td><button onclick="app.Edit(' + i + ')"  class="btn btn-warning">Edit</button></td>';
+        data += '<td><button onclick="app.Delete(' + i + ')"  class="btn btn-danger">Delete</button></td>';
+        data += '</tr>';
+      }
     }
-    function render() {
-     // clear the list
-     todo.innerHTML = null;
-   
-     // get the todo list from localstorage
-     const todos = localStorage.getItem("todos");
-     todoList = JSON.parse(todos) || [];
-   
-     for (let i = 0; i < todoList.length; i++) {
-   
-       const item = document.createElement("li");
-   
-       // create checkbox to update completed state
-       const checkbox = document.createElement("input");
-   
-       checkbox.type = "checkbox";
-   
-       checkbox.addEventListener("click", function (e) {
-         todoList[i].completed = e.target.checked;
-         localStorage.setItem("todos", JSON.stringify(todoList));
-   
-           // check if todo item is completed and add appropriate class
-           if (todoList[i].completed) {
-              item.classList.add("completed");
-              item.classList.remove("uncompleted");
-             checkbox.checked = todoList[i].completed;
-          } else {
-            item.classList.add("uncompleted");
-            item.classList.remove("completed");
-            checkbox.checked = todoList[i].completed;
-         }
-   
-       });
-   
-     }
-   }
-   // create text node
-   const text = document.createElement("p");
-   text.innerText = todoList[i].text;
 
-   // create delete button
-   const button = document.createElement("button");
-   button.innerText = "X";
-   button.addEventListener("click", function () {
-     todoList.splice(i, 1);
-     localStorage.setItem("todos", JSON.stringify(todoList));
-     render();
-   });
-   item.appendChild(checkbox);
-   item.appendChild(text);
-   item.appendChild(button);
-   todo.appendChild(item);
-   input.value = null;
+    this.Count(this.tasks.length);
+    return this.el.innerHTML = data;
+  };
+
+  this.Add = function () {
+    el = document.getElementById('add-todo');
+    // Get the value
+    var task = el.value;
+
+    if (task) {
+      // Add the new value
+      this.tasks.push(task.trim());
+      // Reset input value
+      el.value = '';
+      // Dislay the new list
+      this.FetchAll();
+    }
+  };
+
+  this.Edit = function (item) {
+    var el = document.getElementById('edit-todo');
+    // Display value in the field
+    el.value = this.tasks[item];
+    // Display fields
+    document.getElementById('edit-box').style.display = 'block';
+    self = this;
+
+    document.getElementById('save-edit').onsubmit = function() {
+      // Get value
+      var task = el.value;
+
+      if (task) {
+        // Edit value
+        self.tasks.splice(item, 1, task.trim());
+        // Display the new list
+        self.FetchAll();
+        // Hide fields
+        CloseInput();
+      }
+    }
+  };
+
+  this.Delete = function (item) {
+    // Delete the current row
+    this.tasks.splice(item, 1);
+    // Display the new list
+    this.FetchAll();
+  };
+
+  this.Count = function(data) {
+    var el   = document.getElementById('counter');
+    var name = 'Tasks';
+
+    if (data) {
+        if(data ==1){
+            name = 'Task'
+        }
+      el.innerHTML = data + ' ' + name ;
+    } 
+    else {
+      el.innerHTML = 'No ' + name;
+    }
+  };
+  
+}
+
+app.FetchAll();
+
+function CloseInput() {
+  document.getElementById('edit-box').style.display = 'none';
+}
