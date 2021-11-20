@@ -1,122 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Oh Crud! Things I Forgot To-Do</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: "Roboto", sans-serif;
-    --text-color: #333;
-    color: var(--text-color);
-    background-color: #e0f0fd;
-  }
-
-  .container {
+  <style>
+    
+  .title{
     text-align: center;
-    width: 40%;
+    margin-top: 25px;
+  }
+
+  .form{
+      margin: auto;
+      max-width:400px;
+      text-align: center
+  }
+
+  input[type='submit'], button, [aria-label]{
+    cursor: pointer;
+  }
+  #edit-box{
+    display: none;
+    max-width: 80%;
     margin: auto;
-    color: #181818;
-    min-height: 90vh;
-    margin-top: 2%;
+    margin-top: 10px;
   }
 
-  .todo {
-    width: 100%;
-    padding-bottom: 15px;
-    background: #3366ff;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    color: #ffffff;
+  td{
+      background-color: aliceblue;
+      padding-right: 10px;
+      text-align: left;
   }
 
-  h1 {
-    margin-bottom: 20px;
-    font-size: 80px;
-    margin-top: 0;
-    padding-left: 10px;
+  .to-do{
+      background: transparent !important;
   }
-
-  input {
-    background: none;
-    outline: none;
-    border: none;
-    border-bottom: 2px solid #ffffff;
-    color: #ffffff;
-    padding: 8px;
-    font-size: 20px;
-  }
-
-  .list-todo {
-    height: 60vh;
-    background-color: #ffffff;
-    overflow-x: scroll;
-  }
-
-  #todo {
-    padding: 0 10px 0 10px;
-  }
-
-  #todo li {
-    list-style: none;
-    font-size: 16px;
-    width: 100%;
-    max-width: 100%;
-    display: flex;
-    --webkit-display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    text-align: justify;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #777777;
-    padding-bottom: 8px;
-  }
-
-  #todo li.completed {
-    text-decoration: line-through;
-  }
-
-  #todo li.uncompleted {
-    text-decoration: none;
-    color: black;
-  }
-
-  #todo li input {
-    margin-right: 10px;
-  }
-
-  #todo li button {
-    outline: none;
-    border: none;
-    border-radius: 200px;
-    margin-left: 10px;
-    background-color: #3366ff;
-    color: #ffffff;
-    width: 6%;
-    height: 5vh;
-  }
-</style>
-
+ 
+  </style>
 <body>
-  <div class="container">
-    <div class="todo">
-      <h1>Todo</h1>
-      <p>What do you want to get done today?</p>
-      <form id="form">
-        <input type="text" id="input" placeholder="Enter task" />
-      </form>
+
+    <div class="title">
+        <h1>Oh Crud!</h1>
+        <p>Things I forgot to do:</p>
     </div>
 
-    <div class="list-todo">
-      <ul id="todo"></ul>
-    </div>
+<div class="form">
+    <form action="javascript:void(0);" method="POST" onsubmit="app.Add()"> 
+    <input type="text" id="add-todo" placeholder="Thing To-Do">
+    <input type="submit" value="Add" class="btn btn-primary">
+    </form>
+    <p>You Have: </p>
+    <p id="counter"></p>
+
+    <table>
+    <tr class="to-do">
+        <th><h3>To-Do:</h3></th>
+    </tr>
+        <tbody id="tasks">
+        </tbody>
+    </table>
+</div>
+
+<div id="edit-box" role="aria-hidden">
+    <form action="javascript:void(0);" method="POST" id="save-edit">
+      <input type="text" id="edit-todo">
+      <input type="submit" value="Save" class="btn btn-success"/> <a onclick="CloseInput()" aria-label="Close">&#10006;</a>
+    </form>
   </div>
-  <script src="./index.js"></script>
-</body>
 
+  <a href="https://www.youtube.com/watch?v=Mykv_Ee1IeU">Link video gốc</a>
+  <p>Em không biết api liên quan gì đến cái này </p>
+<script src="index.js"></script>
+</body>
 </html>
